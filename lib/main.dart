@@ -34,7 +34,7 @@ class _PortalHomePageState extends State<PortalHomePage> {
 
   bool _isLoggedIn = false;
   String _loggedInUser = 'NANDANA R';
-  String _regNo = 'ATP23CS063';
+  String _regNo = 'ATP23CS060';
 
   String? _errorMessage;
   String _activeNavId = 'Home';
@@ -72,7 +72,7 @@ class _PortalHomePageState extends State<PortalHomePage> {
       // Capture custom name if entered, otherwise use default
       if (username.toLowerCase() == 'student') {
         _loggedInUser = 'NANDANA R';
-        _regNo = 'ATP23CS063';
+        _regNo = 'ATP23CS060';
       } else if (username.toLowerCase() == 'institution') {
         _loggedInUser = 'CET Admin';
         _regNo = 'TVE-INST';
