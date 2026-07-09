@@ -1907,7 +1907,6 @@ class _ExaminationGradesViewState extends State<ExaminationGradesView> {
         // Table Body
         ...courses.map((course) {
           final String grade = course['grade']!;
-          final bool isFailed = grade == 'F';
           return TableRow(
             children: [
               TableCell(
@@ -1915,7 +1914,11 @@ class _ExaminationGradesViewState extends State<ExaminationGradesView> {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Text(
                     course['name']!,
-                    style: const TextStyle(fontSize: 11, color: Colors.black54),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.5,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),
@@ -1924,7 +1927,11 @@ class _ExaminationGradesViewState extends State<ExaminationGradesView> {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Text(
                     course['code']!,
-                    style: const TextStyle(fontSize: 11, color: Colors.black54),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.5,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),
@@ -1934,9 +1941,9 @@ class _ExaminationGradesViewState extends State<ExaminationGradesView> {
                   child: Text(
                     grade,
                     style: const TextStyle(
-                      fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54,
+                      fontSize: 11.5,
+                      color: Colors.black87,
                     ),
                   ),
                 ),
@@ -1946,7 +1953,11 @@ class _ExaminationGradesViewState extends State<ExaminationGradesView> {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Text(
                     course['credits']!,
-                    style: const TextStyle(fontSize: 11, color: Colors.black54),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11.5,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),
