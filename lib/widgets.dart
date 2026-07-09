@@ -1933,10 +1933,10 @@ class _ExaminationGradesViewState extends State<ExaminationGradesView> {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Text(
                     grade,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: isFailed ? Colors.red : Colors.green,
+                      color: Colors.black54,
                     ),
                   ),
                 ),

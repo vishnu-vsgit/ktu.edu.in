@@ -12,7 +12,7 @@ class KtuPortalApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'APJ Abdul Kalam Technological University',
+      title: 'ktu.edu.in',
       theme: buildAppTheme(),
       debugShowCheckedModeBanner: false,
       home: const PortalHomePage(),
