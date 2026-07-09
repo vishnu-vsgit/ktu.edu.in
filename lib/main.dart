@@ -110,45 +110,188 @@ class _PortalHomePageState extends State<PortalHomePage> {
   // LOGIN SCREEN
   // ==========================================
   Widget _buildLoginPage(bool isDesktop) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: _buildLoginNavbar(isDesktop),
-      ),
-      drawer: !isDesktop ? _buildLoginDrawer() : null,
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 20,
-                ),
-                child: Center(
-                  child: Container(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: isDesktop
-                        ? _buildLoginDesktopLayout()
-                        : _buildLoginMobileLayout(),
+    if (isDesktop) {
+      return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: _buildLoginNavbar(true),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 20,
+                  ),
+                  child: Center(
+                    child: Container(
+                      constraints: const BoxConstraints(maxWidth: 1200),
+                      child: _buildLoginDesktopLayout(),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          _buildFooter(),
-        ],
-      ),
-    );
+            _buildFooter(true),
+          ],
+        ),
+      );
+    } else {
+      // Mobile login layout to match user's screenshot exactly
+      return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: _buildLoginNavbar(false),
+        ),
+        drawer: _buildLoginDrawer(),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Upper portion with solid blue background and "Sign In" text
+                    Container(
+                      height: 380, // Height to mimic the blue block
+                      color: const Color(0xFF7CB5EC),
+                      padding: const EdgeInsets.only(left: 20, bottom: 25, right: 20),
+                      child: const Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Lower portion with white background containing the Form
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            if (_errorMessage != null)
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 15),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF2DEDE),
+                                  border: Border.all(color: const Color(0xFFEBCCD1)),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Text(
+                                  _errorMessage!,
+                                  style: const TextStyle(
+                                    color: Color(0xFFA94442),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            const Text(
+                              'Username',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xFF0F75BC), // Blue label color
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _usernameController,
+                              decoration: InputDecoration(
+                                hintText: 'Enter username',
+                                hintStyle: TextStyle(color: Colors.grey[400]),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                  borderSide: BorderSide(color: Colors.grey[300]!),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                  borderSide: BorderSide(color: Colors.grey[300]!),
+                                ),
+                              ),
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'Password',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.normal,
+                                color: Color(0xFF0F75BC),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: 'Enter password',
+                                hintStyle: TextStyle(color: Colors.grey[400]),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                  borderSide: BorderSide(color: Colors.grey[300]!),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                  borderSide: BorderSide(color: Colors.grey[300]!),
+                                ),
+                              ),
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                            const SizedBox(height: 35),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF5CB85C), // Green button
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                elevation: 0,
+                              ),
+                              onPressed: _handleLogin,
+                              child: const Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            _buildFooter(false),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _buildLoginNavbar(bool isDesktop) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.navbarBg,
-        border: Border(bottom: BorderSide(color: Color(0xFFB2D1ED), width: 1)),
+      decoration: BoxDecoration(
+        color: isDesktop ? AppColors.navbarBg : const Color(0xFFE8F2FC),
+        border: Border(bottom: BorderSide(color: const Color(0xFFB2D1ED), width: isDesktop ? 1 : 2)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,10 +301,10 @@ class _PortalHomePageState extends State<PortalHomePage> {
                 children: [
                   Image.asset(
                     'images/ktu-logo.png',
-                    height: 40,
+                    height: 38,
                     errorBuilder: (context, error, stackTrace) => Container(
-                      width: 40,
-                      height: 40,
+                      width: 38,
+                      height: 38,
                       color: AppColors.primaryBlue,
                       child: const Icon(
                         Icons.school,
@@ -170,21 +313,23 @@ class _PortalHomePageState extends State<PortalHomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  const Expanded(
+                  const SizedBox(width: 8),
+                  Expanded(
                     child: Text(
                       'e-Gov Platform for APJ Abdul Kalam Technological University',
                       style: TextStyle(
-                        color: AppColors.navbarText,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                        color: isDesktop ? AppColors.navbarText : const Color(0xFF0F75BC),
+                        fontSize: isDesktop ? 15 : 14,
+                        fontWeight: FontWeight.normal,
                       ),
-                      overflow: TextOverflow.ellipsis,
+                      maxLines: isDesktop ? 1 : 2,
+                      overflow: isDesktop ? TextOverflow.ellipsis : TextOverflow.clip,
                     ),
                   ),
                 ],
               ),
             ),
+            const SizedBox(width: 10),
             if (isDesktop)
               Row(
                 children: [
@@ -196,9 +341,19 @@ class _PortalHomePageState extends State<PortalHomePage> {
               )
             else
               Builder(
-                builder: (context) => IconButton(
-                  icon: const Icon(Icons.menu, color: AppColors.primaryBlue),
-                  onPressed: () => Scaffold.of(context).openDrawer(),
+                builder: (context) => InkWell(
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey[300]!),
+                      borderRadius: BorderRadius.circular(4),
+                      color: const Color(0xFFF5F5F5),
+                    ),
+                    child: const Icon(Icons.menu, color: Color(0xFF777777), size: 18),
+                  ),
                 ),
               ),
           ],
@@ -657,7 +812,7 @@ class _PortalHomePageState extends State<PortalHomePage> {
               ],
             ),
           ),
-          _buildFooter(),
+          _buildFooter(isDesktop),
         ],
       ),
     );
@@ -1136,16 +1291,39 @@ class _PortalHomePageState extends State<PortalHomePage> {
   }
 
   // Footer Widget
-  Widget _buildFooter() {
-    return Container(
-      width: double.infinity,
-      color: AppColors.footerBg,
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      alignment: Alignment.center,
-      child: const Text(
-        'Copyright © APJ Abdul Kalam Technological University 2014.',
-        style: TextStyle(color: Colors.white, fontSize: 12),
-      ),
-    );
+  Widget _buildFooter(bool isDesktop) {
+    if (isDesktop) {
+      return Container(
+        width: double.infinity,
+        color: AppColors.footerBg,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        alignment: Alignment.center,
+        child: const Text(
+          'Copyright © APJ Abdul Kalam Technological University 2014.',
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        ),
+      );
+    } else {
+      return Container(
+        width: double.infinity,
+        color: const Color(0xFF0F75BC), // Dark blue footer matching mobile screenshot
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        child: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Copyright ©APJ Abdul Kalam Technological',
+              style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.normal),
+            ),
+            SizedBox(height: 5),
+            Text(
+              'University 2014.',
+              style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.normal),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
